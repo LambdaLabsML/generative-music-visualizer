@@ -1,0 +1,6 @@
+gradio
+librosa
+moviepy
+numpy
+torch
+tqdm
