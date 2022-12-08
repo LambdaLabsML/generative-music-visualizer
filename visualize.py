@@ -4,8 +4,7 @@ import moviepy.editor as mpy
 import random
 import torch
 from tqdm import tqdm
-import stylegan3.dnnlib
-import stylegan3.legacy
+import stylegan3
 
 
 def visualize(audio_file, network, truncation, batch_size, *args, **kwargs):
@@ -34,8 +33,8 @@ def visualize(audio_file, network, truncation, batch_size, *args, **kwargs):
 
     # Load pre-trained model
     device = torch.device('cuda')
-    with stylegan3.dnnlib.open_url(network) as f:
-        G = stylegan3.legacy.load_network_pkl(f)['G_ema'].to(device) # type: ignore
+    with stylegan3.open_url(network) as f:
+        G = stylegan3.load_network_pkl(f)['G_ema'].to(device) # type: ignore
         G.eval()
 
     with torch.no_grad():
