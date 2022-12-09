@@ -1,6 +1,7 @@
 gradio
 librosa
 moviepy
+ninja
 numpy
 torch
 tqdm
