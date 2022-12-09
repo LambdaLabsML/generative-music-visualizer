@@ -185,7 +185,7 @@ def visualize(audio_file,
     #Save video
     aud = mpy.AudioFileClip(audio_file)
 
-    if duration is not None:
+    if duration < aud.duration:
         aud.duration = duration
 
     fps = target_sr / frame_length
