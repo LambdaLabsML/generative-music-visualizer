@@ -16,7 +16,6 @@ def visualize(audio_file,
               jitter,
               frame_length,
               duration,
-              outfile="output.mp4",
               ):
     print(audio_file)
 
@@ -54,6 +53,7 @@ def visualize(audio_file,
     # TODO:
     batch_size = 1
     resolution = 512
+    outfile="output.mp4"
 
     tempo_sensitivity = tempo_sensitivity * frame_length / 512
 

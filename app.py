@@ -70,8 +70,8 @@ article = \
     """
 
 examples = [
-    ["examples/Maple_leaf_rag_-_played_by_Scott_Joplin_1916_V2.ogg", network_choices[0], 1.0, 0.25, 0.5, 512, 600, "example1.mp4"],
-    ["examples/Muriel-Nguyen-Xuan-Beethovens-Moonlight-Sonata-mvt-3.ogx", network_choices[4], 1.2, 0.3, 0.5, 384, 600, "example2.mp4"],
+    # ["examples/Maple_leaf_rag_-_played_by_Scott_Joplin_1916_V2.ogg", network_choices[0], 1.0, 0.25, 0.5, 512, 600],
+    ["examples/Muriel-Nguyen-Xuan-Beethovens-Moonlight-Sonata-mvt-3.ogx", network_choices[4], 1.2, 0.3, 0.5, 384, 600],
 ]
 
 demo = gr.Interface(
@@ -87,7 +87,6 @@ demo = gr.Interface(
             gr.Slider(minimum=0.0, value=0.5, maximum=2.0, label="Jitter"),
             gr.Slider(minimum=64, value=512, maximum=1024, step=64, label="Frame Length (samples)"),
             gr.Slider(minimum=1, value=300, maximum=600, step=1, label="Max Duration (seconds)"),
-            gr.Textbox(value="output.mp4", visible=False),
             ],
     examples=examples,
     outputs=gr.Video(),
