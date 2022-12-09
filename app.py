@@ -70,8 +70,8 @@ article = \
     """
 
 examples = [
-    ["examples/Maple_leaf_rag_-_played_by_Scott_Joplin_1916_V2.ogg", network_choices[0], 1.0, 0.25, 0.5, 512, 45],
-    ["examples/Muriel-Nguyen-Xuan-Beethovens-Moonlight-Sonata-mvt-3.ogx", network_choices[4], 1.2, 0.3, 0.5, 384, 22],
+    ["examples/Maple_leaf_rag_-_played_by_Scott_Joplin_1916_V2.ogg", network_choices[0], 1.0, 0.25, 0.5, 512, 600, "example1.mp4"],
+    ["examples/Muriel-Nguyen-Xuan-Beethovens-Moonlight-Sonata-mvt-3.ogx", network_choices[4], 1.2, 0.3, 0.5, 384, 600, "example2.mp4"],
 ]
 
 demo = gr.Interface(

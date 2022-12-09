@@ -16,6 +16,7 @@ def visualize(audio_file,
               jitter,
               frame_length,
               duration,
+              outfile="output.mp4",
               ):
     print(audio_file)
 
@@ -55,8 +56,6 @@ def visualize(audio_file,
     resolution = 512
 
     tempo_sensitivity = tempo_sensitivity * frame_length / 512
-
-    outfile = "output.mp4"
 
     # Load pre-trained model
     device = torch.device('cuda')
