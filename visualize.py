@@ -5,7 +5,8 @@ import random
 import torch
 from moviepy.audio.AudioClip import AudioArrayClip
 from tqdm import tqdm
-import stylegan3
+import dnnlib
+import legacy
 
 target_sr = 22050
 
@@ -64,8 +65,8 @@ def visualize(audio_file,
 
     # Load pre-trained model
     device = torch.device('cuda')
-    with stylegan3.open_url(network) as f:
-        G = stylegan3.load_network_pkl(f)['G_ema'].to(device) # type: ignore
+    with dnnlib.util.open_url(network) as f:
+        G = legacy.load_network_pkl(f)['G_ema'].to(device) # type: ignore
         G.eval()
 
     with torch.no_grad():

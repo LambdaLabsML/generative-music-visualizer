@@ -14,8 +14,8 @@ import re
 import copy
 import numpy as np
 import torch
-from stylegan3 import dnnlib
-from stylegan3.torch_utils import misc
+import dnnlib
+from torch_utils import misc
 
 #----------------------------------------------------------------------------
 
