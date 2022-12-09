@@ -3,31 +3,62 @@ import numpy as np
 import moviepy.editor as mpy
 import random
 import torch
+from moviepy.audio.AudioClip import AudioArrayClip
 from tqdm import tqdm
 import stylegan3
 
+target_sr = 22050
 
-def visualize(audio_file, network, truncation, batch_size, *args, **kwargs):
+def visualize(audio_file,
+              network,
+              truncation,
+              tempo_sensitivity,
+              jitter,
+              frame_length,
+              duration,
+              ):
     # print(audio_file, truncation, network)
     # print(args)
     # print(kwargs)
 
     if audio_file:
         print('\nReading audio \n')
-        y, sr = librosa.load(audio_file.name)
+        # audio, sr = librosa.load(audio_file.name)
+        sr, audio = audio_file
     else:
         raise ValueError("you must enter an audio file name in the --song argument")
 
+    print(sr)
+    print(audio.dtype)
+    print(audio.shape)
+    if audio.shape[0] < duration * sr:
+        duration = None
+    else:
+        frames = duration * sr
+        audio = audio[:frames]
+
+    print(audio.dtype)
+    print(audio.shape)
+    if audio.dtype == np.int16:
+        audio = audio.astype(np.float32, order='C') / 32768.0
+    audio = audio.T
+    audio = librosa.to_mono(audio)
+    audio = librosa.resample(audio, orig_sr=sr, target_sr=target_sr, res_type="kaiser_best")
+    print(audio.dtype)
+    print(audio.shape)
+
+    if audio.shape[0] / target_sr < duration:
+        duration = None
+    else:
+        frames = duration * sr
+        audio = audio[:frames]
+
+
+    # TODO:
+    batch_size = 1
     resolution = 512
 
-    duration = None
-
-    frame_length = 512
-
-    tempo_sensitivity = 0.25
     tempo_sensitivity = tempo_sensitivity * frame_length / 512
-
-    jitter = 0.5
 
     outfile = "output.mp4"
 
@@ -46,7 +77,7 @@ def visualize(audio_file, network, truncation, batch_size, *args, **kwargs):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     #create spectrogram
-    spec = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=512,fmax=8000, hop_length=frame_length)
+    spec = librosa.feature.melspectrogram(y=audio, sr=target_sr, n_mels=512,fmax=8000, hop_length=frame_length)
 
     #get mean power at each time point
     specm=np.mean(spec,axis=0)
@@ -143,9 +174,6 @@ def visualize(audio_file, network, truncation, batch_size, *args, **kwargs):
     frames = []
     for i in tqdm(range(noise_vectors.shape[0] // batch_size)):
 
-        #print progress
-        pass
-
         noise_vector=noise_vectors[i*batch_size:(i+1)*batch_size]
 
         c = None  # class labels (not used in this example)
@@ -160,15 +188,24 @@ def visualize(audio_file, network, truncation, batch_size, *args, **kwargs):
 
 
     #Save video
-    aud = mpy.AudioFileClip(audio_file.name, fps = 44100)
+    sr, audio = audio_file
+    if audio.dtype == np.int16:
+        audio = audio.astype(np.float32, order='C') / 32768.0
+    with AudioArrayClip(audio, sr) as aud:  # from a numeric array
+        pass  # Close is implicitly performed by context manager.
 
-    if duration:
+    if duration is not None:
         aud.duration = duration
 
-    fps = 22050/frame_length
+    fps = target_sr / frame_length
     clip = mpy.ImageSequenceClip(frames, fps=fps)
     clip = clip.set_audio(aud)
-    clip.write_videofile(outfile, audio_codec='aac', ffmpeg_params=["-vf", "scale=-1:2160:flags=lanczos", "-bf", "2", "-g", f"{fps/2}", "-crf", "18", "-movflags", "faststart"])
-
+    clip.write_videofile(outfile, audio_codec='aac', ffmpeg_params=[
+        # "-vf", "scale=-1:2160:flags=lanczos",
+        "-bf", "2",
+        "-g", f"{fps/2}",
+        "-crf", "18",
+        "-movflags", "faststart"
+    ])
 
     return outfile

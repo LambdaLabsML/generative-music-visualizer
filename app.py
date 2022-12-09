@@ -32,12 +32,19 @@ network_choices = [
     'https://api.ngc.nvidia.com/v2/models/nvidia/research/stylegan2/versions/1/files/stylegan2-metfacesu-1024x1024.pkl'
 ]
 
+
 demo = gr.Interface(
     fn=visualize,
-    inputs=[gr.File(label="Audio file"),
+    inputs=[
+            gr.Audio(label="Audio File"),
+            # gr.File(),
             gr.Dropdown(choices=network_choices, value=network_choices[0], label="Network"),
-            gr.Slider(minimum=0.0, value=1.0, maximum=2.0, step=0.1, label="Truncation"),
-            gr.Slider(minimum=1, value=16, maximum=64, step=48, label="Batch Size")],
+            gr.Slider(minimum=0.0, value=1.0, maximum=2.0, label="Truncation"),
+            gr.Slider(minimum=0.0, value=0.25, maximum=2.0, label="Tempo Sensitivity"),
+            gr.Slider(minimum=0.0, value=0.5, maximum=2.0, label="Jitter"),
+            gr.Slider(minimum=64, value=512, maximum=1024, step=64, label="Frame Length (samples)"),
+            gr.Slider(minimum=1, value=300, maximum=600, step=1, label="Max Duration (seconds)"),
+            ],
     outputs=gr.Video()
 )
 demo.launch()
