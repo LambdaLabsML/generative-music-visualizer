@@ -70,7 +70,7 @@ article = \
     """
 
 examples = [
-    # ["examples/Maple_leaf_rag_-_played_by_Scott_Joplin_1916_V2.ogg", network_choices[0], 1.0, 0.25, 0.5, 512, 600],
+    ["examples/Maple_leaf_rag_-_played_by_Scott_Joplin_1916_V2.ogg", network_choices[0], 1.0, 0.25, 0.5, 512, 600],
     ["examples/Muriel-Nguyen-Xuan-Beethovens-Moonlight-Sonata-mvt-3.ogx", network_choices[4], 1.2, 0.3, 0.5, 384, 600],
 ]
 
