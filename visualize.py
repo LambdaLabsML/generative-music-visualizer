@@ -41,7 +41,9 @@ def visualize(audio_file,
     print(audio.dtype)
     print(audio.shape)
     if audio.dtype == np.int16:
-        audio = audio.astype(np.float32, order='C') / 32768.0
+        audio = audio.astype(np.float32, order='C') / 2**15
+    elif audio.dtype == np.int32:
+        audio = audio.astype(np.float32, order='C') / 2**31
     audio = audio.T
     audio = librosa.to_mono(audio)
     audio = librosa.resample(audio, orig_sr=sr, target_sr=target_sr, res_type="kaiser_best")
@@ -185,7 +187,9 @@ def visualize(audio_file,
     #Save video
     sr, audio = audio_file
     if audio.dtype == np.int16:
-        audio = audio.astype(np.float32, order='C') / 32768.0
+        audio = audio.astype(np.float32, order='C') / 2**15
+    elif audio.dtype == np.int32:
+        audio = audio.astype(np.float32, order='C') / 2**31
     with AudioArrayClip(audio, sr) as aud:  # from a numeric array
         pass  # Close is implicitly performed by context manager.
 
