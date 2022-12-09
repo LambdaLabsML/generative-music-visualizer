@@ -88,8 +88,8 @@ demo = gr.Interface(
             gr.Slider(minimum=64, value=512, maximum=1024, step=64, label="Frame Length (samples)"),
             gr.Slider(minimum=1, value=300, maximum=600, step=1, label="Max Duration (seconds)"),
             ],
-    examples=examples,
+    # examples=examples,
     outputs=gr.Video(),
-    cache_examples=True,
+    # cache_examples=True,
 )
 demo.launch()
