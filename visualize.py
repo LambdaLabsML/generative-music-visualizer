@@ -3,7 +3,6 @@ import numpy as np
 import moviepy.editor as mpy
 import random
 import torch
-from moviepy.audio.AudioClip import AudioArrayClip
 from tqdm import tqdm
 import dnnlib
 import legacy
@@ -18,37 +17,37 @@ def visualize(audio_file,
               frame_length,
               duration,
               ):
-    # print(audio_file, truncation, network)
-    # print(args)
-    # print(kwargs)
+    print(audio_file)
 
     if audio_file:
         print('\nReading audio \n')
-        # audio, sr = librosa.load(audio_file.name)
-        sr, audio = audio_file
+        audio, sr = librosa.load(audio_file, duration=duration)
     else:
         raise ValueError("you must enter an audio file name in the --song argument")
 
-    print(sr)
-    print(audio.dtype)
-    print(audio.shape)
-    if audio.shape[0] < duration * sr:
-        duration = None
-    else:
-        frames = duration * sr
-        audio = audio[:frames]
+    # print(sr)
+    # print(audio.dtype)
+    # print(audio.shape)
+    # if audio.shape[0] < duration * sr:
+    #     duration = None
+    # else:
+    #     frames = duration * sr
+    #     audio = audio[:frames]
+    #
+    # print(audio.dtype)
+    # print(audio.shape)
+    # if audio.dtype == np.int16:
+    #     print(f'min: {np.min(audio)}, max: {np.max(audio)}')
+    #     audio = audio.astype(np.float32, order='C') / 2**15
+    # elif audio.dtype == np.int32:
+    #     print(f'min: {np.min(audio)}, max: {np.max(audio)}')
+    #     audio = audio.astype(np.float32, order='C') / 2**31
+    # audio = audio.T
+    # audio = librosa.to_mono(audio)
+    # audio = librosa.resample(audio, orig_sr=sr, target_sr=target_sr, res_type="kaiser_best")
+    # print(audio.dtype)
+    # print(audio.shape)
 
-    print(audio.dtype)
-    print(audio.shape)
-    if audio.dtype == np.int16:
-        audio = audio.astype(np.float32, order='C') / 2**15
-    elif audio.dtype == np.int32:
-        audio = audio.astype(np.float32, order='C') / 2**31
-    audio = audio.T
-    audio = librosa.to_mono(audio)
-    audio = librosa.resample(audio, orig_sr=sr, target_sr=target_sr, res_type="kaiser_best")
-    print(audio.dtype)
-    print(audio.shape)
 
 
     # TODO:
@@ -185,13 +184,7 @@ def visualize(audio_file,
 
 
     #Save video
-    sr, audio = audio_file
-    if audio.dtype == np.int16:
-        audio = audio.astype(np.float32, order='C') / 2**15
-    elif audio.dtype == np.int32:
-        audio = audio.astype(np.float32, order='C') / 2**31
-    with AudioArrayClip(audio, sr) as aud:  # from a numeric array
-        pass  # Close is implicitly performed by context manager.
+    aud = mpy.AudioFileClip(audio_file)
 
     if duration is not None:
         aud.duration = duration
