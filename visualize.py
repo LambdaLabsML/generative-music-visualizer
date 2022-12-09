@@ -48,12 +48,6 @@ def visualize(audio_file,
     print(audio.dtype)
     print(audio.shape)
 
-    if audio.shape[0] / target_sr < duration:
-        duration = None
-    else:
-        frames = duration * sr
-        audio = audio[:frames]
-
 
     # TODO:
     batch_size = 1
