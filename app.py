@@ -39,6 +39,11 @@ Generate visualizations on an input audio file using [StyleGAN3](https://nvlabs.
 Inspired by [Deep Music Visualizer](https://github.com/msieg/deep-music-visualizer), which used BigGAN (Brock et al., 2018) 
 
 Developed by Jeremy Hummel at [Lambda](https://lambdalabs.com/)
+
+Examples:
+* [StyleGAN3 visualization (AFHQv2): Todd Terje - Inspector Norse [4K]](https://www.youtube.com/watch?v=um6SKHI0I20)
+* [StyleGAN3 visualization (FFHQ): Polo & Pan - Canopée [4K]](https://www.youtube.com/watch?v=wLLtwf-hQTc)
+* [StyleGAN3 visualization (MetFaces): Tchaikovsky -The Nutcracker, Op. 71: Waltz of the Flowers [4K]](https://www.youtube.com/watch?v=C3Po-I0vDBw)
 """
 
 article = \
