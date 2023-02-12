@@ -1,7 +1,14 @@
-gradio
+--extra-index-url https://download.pytorch.org/whl/cu116
 librosa
 moviepy
 ninja
 numpy
-torch
+torch==1.12.1+cu116
 tqdm
+gradio==3.5
+ray[serve]
+fastapi==0.88.0
+httpx==0.23.1
+starlette==0.22.0
+fsspec==2023.1.0
+protobuf==3.20.*
